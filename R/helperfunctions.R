@@ -29,3 +29,15 @@ BQ_copy <- function(src_project, src_dataset, src_table, start, end,
              finally = message(src, ' to ', dest))
   }
 }
+
+#Helper function to pull data from BQ
+pull_query <- function(query, proj = 'global', write_disposition='write_truncate'){
+
+    results <- query_exec(query = query
+                          ,project = proj 
+                          ,max_pages = as.numeric(Inf)
+                          ,write_disposition = write_disposition
+                          ,destination_table = "global:test.temp"
+                          ,use_legacy_sql=FALSE)
+    return(results)
+}
